@@ -18,6 +18,7 @@ const when = (condition, config, negativeConfig) =>
 const title = 'Aurelia Navigation Skeleton';
 const outDir = path.resolve(__dirname, project.platform.output);
 const srcDir = path.resolve(__dirname, 'src');
+const localPluginDir = path.resolve(__dirname, '../aurelia-plugin/src');
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 const baseUrl = '/';
 
@@ -39,10 +40,13 @@ const sassRules = [
 module.exports = ({ production } = {}, {extractCss, analyze, tests, hmr, port, host } = {}) => ({
   resolve: {
     extensions: ['.ts', '.js'],
-    modules: [srcDir, 'node_modules'],
+    modules: [srcDir, localPluginDir, 'node_modules'],
     // Enforce single aurelia-binding, to avoid v1/v2 duplication due to
     // out-of-date dependencies on 3rd party aurelia plugins
-    alias: { 'aurelia-binding': path.resolve(__dirname, 'node_modules/aurelia-binding') }
+    alias: {
+      'aurelia-binding': path.resolve(__dirname, 'node_modules/aurelia-binding'),
+      'local-plugin': localPluginDir
+    }
   },
   entry: {
     app: ['aurelia-bootstrapper']
